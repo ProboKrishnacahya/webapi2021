@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class ProjectResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($code)
+    {
+        return [
+            'code' => $this->$code,
+            'project' => $this->project,
+            'semester' => $this->semester,
+            'mata_kuliah' => $this->mata_kuliah,
+            'description' => $this->deskripsi
+        ];
+    }
+}
