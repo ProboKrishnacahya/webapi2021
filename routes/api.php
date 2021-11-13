@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\Auth\RegisterController;
 */
 
 Route::post('register', [RegisterController::class, 'register']);
+
 Route::apiResource('courses', CourseController::class);
 Route::apiResource('projects', ProjectController::class);
 

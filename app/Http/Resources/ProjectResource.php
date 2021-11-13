@@ -12,14 +12,14 @@ class ProjectResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($code)
+    public function toArray($request)
     {
         return [
-            'code' => $this->$code,
+            'code' => $this->code,
             'project' => $this->project,
             'semester' => $this->semester,
             'mata_kuliah' => $this->mata_kuliah,
-            'description' => $this->deskripsi
+            'description' => $this->description
         ];
     }
 }
