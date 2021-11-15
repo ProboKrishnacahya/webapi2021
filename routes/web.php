@@ -20,13 +20,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home', 
+    return view(
+        'home',
         [
             "active_welcome" => "active",
             "active_projects" => "",
             "active_courses" => ""
         ]
     );
+});
+
+Route::get('/latihan', function () {
+    return view('latihan');
 });
 
 Route::resource('projects', ProjectController::class);
@@ -37,18 +42,18 @@ Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::middleware(['admin'])->group(function () {
         Route::get('admin', [AdminController::class, 'index']);
     });
- 
+
     Route::middleware(['user'])->group(function () {
         Route::get('user', [UserController::class, 'index']);
     });
- 
-    Route::get('/logout', function() {
+
+    Route::get('/logout', function () {
         Auth::logout();
         redirect('/');
     });
