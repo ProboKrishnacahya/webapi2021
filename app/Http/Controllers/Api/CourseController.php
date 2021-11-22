@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Course;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseResource;
-use App\Models\Course;
-use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
@@ -17,6 +18,7 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::all();
+
         return ['courses' => CourseResource::collection($courses)];
     }
 
@@ -28,7 +30,15 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Course::create([
+            'course_code' => $request->course_code,
+            'course_name' => $request->course_name,
+            'lecturer' => $request->lecturer,
+            'number_sks' => $request->number_sks,
+            'description' => $request->description
+        ]);
+
+        return ['message' => 'Data has been saved'];
     }
 
     /**
@@ -39,7 +49,10 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        //
+        $code = Str::upper($id);
+        $course = Course::all()->where('course_code', $code);
+
+        return ['courses' => CourseResource::collection($course)];
     }
 
     /**
@@ -51,7 +64,16 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $code = Str::upper($id);
+        $course = Course::findOrFail($code);
+        $course->update([
+            'course_name' => $request->course_name,
+            'lecturer' => $request->lecturer,
+            'number_sks' => $request->number_sks,
+            'description' => $request->description
+        ]);
+
+        return ['message' => 'Data has been updated'];
     }
 
     /**
@@ -62,6 +84,8 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $course->delete();
+        return ['message' => 'Data has been deleted'];
     }
 }
